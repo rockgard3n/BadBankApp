@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import NaviBar from './components/navbar';
+import NavBar from './components/navbar';
 import { Outlet } from 'react-router-dom';
 // import { UserContext } from './components/context';
 
@@ -9,7 +9,7 @@ function App() {
     <div>
     
       {/* The outlet tag allows the router to render whatever I'm linking to */}
-      <NaviBar/>
+      <NavBar/>
       <br/>
       <div className="centered">
       <Outlet />

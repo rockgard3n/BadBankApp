@@ -1,9 +1,13 @@
+// These imports are what my Spa function relies on to work properly and also for it to look nice and snazzy 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import './index.css';
+import {HashRouter, Routes, Route} from 'react-router-dom';
 import App from './App';
+import { UserContext } from './components/context'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css';
 
+// These import my different routes for the navbar as elements, makes the code cleaner
 import Home from './routes/home';
 import CreateAccount from './routes/createaccount';
 import Login from './routes/login';
@@ -11,20 +15,12 @@ import Deposit from './routes/deposit';
 import Withdraw from './routes/withdraw';
 import AllData from './routes/alldata';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
 
-{/* Wrap everything below in UserContext.Provider to make context available
-to all the associated routes. Then define how the context object is going to 
-look initially */}
-
-      
+function Spa() {
+  return(
+    <HashRouter>
+      <UserContext.Provider value={{users:[{name:'abel',email:'abel@mit.edu',password:'secret',balance:100}], currentUserIndex: null}}>
       <Routes>
-
-{/* Can pass props to each of the components below within the curly braces
-for element within each route */}
-
         <Route path="/" element={<App />}>
           <Route index element={<Home />}/>
           <Route path="createaccount" element={<CreateAccount />} />
@@ -34,7 +30,12 @@ for element within each route */}
           <Route path="alldata" element={<AllData />} />
         </Route>
       </Routes>
-    </BrowserRouter>
-  </React.StrictMode>,
-  document.querySelector('#root')
+      </UserContext.Provider>
+    </HashRouter>
+  );
+}
+
+ReactDOM.render(
+  <Spa/>,
+  document.getElementById('root')
 );
