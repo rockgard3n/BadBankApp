@@ -44,8 +44,8 @@ function CreateAccount(){
         setStatus("Please enter a valid email");
         return;
     } ;
-      if (!validate(password, 'password') || password.length < 6) {
-        setStatus("Please enter a valid 6+ character password");
+      if (!validate(password, 'password') || password.length < 8) {
+        setStatus("Please enter a valid 8+ character password");
         return;}
       ctx.users.push({name,email,password,balance:100, history: {action:"Account Creation", amount: 100, eventDate}});
       setStatus("")

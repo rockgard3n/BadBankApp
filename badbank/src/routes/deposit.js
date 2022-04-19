@@ -7,36 +7,36 @@ function Deposit(){
     
     const [status, setStatus]     = React.useState('');
     const [deposit, setDeposit]   = React.useState(0);
+    const [enable, setEnable]     = React.useState(false);
 
     //checks if a user is logged in currently, this impacts whether users can see the login card or not
     const [show, setShow]         = React.useState(() => {
         if (ctx.currentUserIndex) {
-            return false;
-        } else {
             return true;
+        } else {
+            return false;
         }
     });
 
 
     function handleSubmit() {
-        for (let i=0; i < ctx.users.length; i++) {
-            if (ctx.users[i].email === email) {
-                if (ctx.users[i].password === password) {
-                    search = ctx.users[i]
-                    ctx.currentUserIndex = i;
-                    console.log(ctx.users[ctx.currentUserIndex])
-                    setStatus("");
-                    setShow(false);
-                } else {
-                    setStatus("Incorrect Password");
-                    return;
-                }
-            }
+        var numbers = /^[0-9]+./;
+    
+        if (deposit.match(numbers) || deposit > 0){
+            console.log("successful deposit");
+            setStatus("You have successfully made a deposit of $" + deposit);
+            ctx.users[ctx.currentUserIndex].balance = ctx.users[ctx.currentUserIndex].balance + Number(deposit);
+            setEnable(false);
+            setDeposit(0);
+        } else {
+            setStatus("Must input valid number");
         }
-        if (search === "") {
-            setStatus("No such username found")
-            return;
-        }
+        
+    }
+
+    function makeChange(e) {
+        setEnable(true);
+        setDeposit(e.currentTarget.value);
     }
 
     return (
@@ -47,12 +47,12 @@ function Deposit(){
           body={show ? (  
                   <>
                   Deposit<br/>
-                  <input type="number" className="form-control" id="deposit" placeholder="Enter deposit amount" value={deposit} onChange={e => setDeposit(e.currentTarget.value)}/><br/>
-                  <button type="submit" className="btn btn-light" onClick={handleSubmit}>Login</button>
+                  <input type="number" className="form-control" id="deposit" placeholder="Enter deposit amount" value={deposit} onChange={e => makeChange(e)}/><br/>
+                  <button type="submit" disabled={!enable} className="btn btn-light" onClick={handleSubmit}>Make Deposit</button>
                   </>
                 ):(
                   <>
-                  <h5>Welcome {ctx.users[ctx.currentUserIndex].name}</h5>
+                  <h5>Please Login to make a Deposit</h5>
                   </>
                 )}
         />
