@@ -6,7 +6,7 @@ function Withdraw(){
     const ctx = React.useContext(UserContext);
     
     const [status, setStatus]     = React.useState('');
-    const [deposit, setDeposit]   = React.useState(0);
+    const [withdrawal, setWithdrawal]   = React.useState(0);
     const [enable, setEnable]     = React.useState(false);
 
     //checks if a user is logged in currently, this impacts whether users can see the login card or not
@@ -32,17 +32,20 @@ function Withdraw(){
         ":"+date.getSeconds();
       console.log(eventDate);
         
-        if (deposit < 0) {
-            setStatus("All deposits must be greater than $0.00") 
+        if (withdrawal < 0) {
+            setStatus("All withdrawals must be greater than $0.00") 
             setEnable(false);
         }
-        else if (deposit.match(numbers) || deposit > 0){
+        else if (withdrawal.match(numbers) || withdrawal > 0){
+            if (withdrawal > ctx.users[ctx.currentUserIndex].balance) {
+                alert("You have just made an overdraft");
+            }
             console.log("successful withdrawal");
-            setStatus("You have successfully made a deposit of $" + deposit);
-            ctx.users[ctx.currentUserIndex].balance = ctx.users[ctx.currentUserIndex].balance - Number(deposit);
-            ctx.users[ctx.currentUserIndex].history.push({action:"Withdrawal", amount: deposit, balance: ctx.users[ctx.currentUserIndex].balance, eventDate})
+            setStatus("You have successfully made a withdrawal of $" + withdrawal);
+            ctx.users[ctx.currentUserIndex].balance = ctx.users[ctx.currentUserIndex].balance - Number(withdrawal);
+            ctx.users[ctx.currentUserIndex].history.push({action:"Withdrawal", amount: withdrawal, balance: ctx.users[ctx.currentUserIndex].balance, eventDate})
             setEnable(false);
-            setDeposit(0);
+            setWithdrawal(0);
         } else {
             setStatus("Must input valid number")
             setEnable(false);;
@@ -51,7 +54,7 @@ function Withdraw(){
 
     function makeChange(e) {
         setEnable(true);
-        setDeposit(e.currentTarget.value);
+        setWithdrawal(e.currentTarget.value);
     }
 
     return (
@@ -64,12 +67,12 @@ function Withdraw(){
                   <h5>Hello, {ctx.users[ctx.currentUserIndex].name}</h5>
                   <h6>Your current balance is: ${ctx.users[ctx.currentUserIndex].balance}</h6>
                   Withdrawal<br/>
-                  <input type="number" className="form-control" id="deposit" placeholder="Enter deposit amount" value={deposit} onChange={e => makeChange(e)}/><br/>
-                  <button type="submit" disabled={!enable} className="btn btn-light" onClick={handleSubmit}>Make Deposit</button>
+                  <input type="number" className="form-control" id="withdrawal" placeholder="Enter withdrawal amount" value={withdrawal} onChange={e => makeChange(e)}/><br/>
+                  <button type="submit" disabled={!enable} className="btn btn-light" onClick={handleSubmit}>Withdrawal</button>
                   </>
                 ):(
                   <>
-                  <h5>Please Login to make a Deposit</h5>
+                  <h5>Please Login to make a Withdrawal</h5>
                   </>
                 )}
         />
