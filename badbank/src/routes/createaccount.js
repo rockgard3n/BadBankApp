@@ -25,6 +25,17 @@ function CreateAccount(){
     //note Im giving everyone a free hundred smackers in their balance to get started cus im a good guy
     function handleCreate(){
       console.log(name,email,password);
+      var timestamp = Date.now()
+      var date = new Date(timestamp);
+
+      var eventDate = date.getDate()+
+        "/"+(date.getMonth()+1)+
+        "/"+date.getFullYear()+
+        " "+date.getHours()+
+        ":"+date.getMinutes()+
+        ":"+date.getSeconds();
+      console.log(eventDate);
+
       if (!validate(name,     'name'))  {
           setStatus("Please enter a name");
           return;
@@ -33,10 +44,10 @@ function CreateAccount(){
         setStatus("Please enter a valid email");
         return;
     } ;
-      if (!validate(password, 'password') || password.length < 8) {
-        setStatus("Please enter a valid 8+ character password");
+      if (!validate(password, 'password') || password.length < 6) {
+        setStatus("Please enter a valid 6+ character password");
         return;}
-      ctx.users.push({name,email,password,balance:100});
+      ctx.users.push({name,email,password,balance:100, history: {action:"Account Creation", amount: 100, eventDate}});
       setStatus("")
       setShow(false);
     }    
