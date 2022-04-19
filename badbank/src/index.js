@@ -19,7 +19,7 @@ import AllData from './routes/alldata';
 function Spa() {
   return(
     <HashRouter>
-      <UserContext.Provider value={{users:[{name:'abel',email:'abel@mit.edu',password:'secret',balance:100, history: [{action:"Account Creation", amount:100, eventDate:""}]}], currentUserIndex: null}}>
+      <UserContext.Provider value={{users:[{name:'abel',email:'abel@mit.edu',password:'secret',balance:100, history: [{action:"Account Creation", amount:100, balance: 100, eventDate:""}]}], currentUserIndex: null}}>
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<Home />}/>

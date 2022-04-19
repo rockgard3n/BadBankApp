@@ -48,7 +48,7 @@ function CreateAccount(){
       if (!validate(password, 'password') || password.length < 8) {
         setStatus("Please enter a valid 8+ character password");
         return;}
-      ctx.users.push({name,email,password,balance:100, history: [{action:"Account Creation", amount: 100, eventDate}]});
+      ctx.users.push({name,email,password,balance:100, history: [{action:"Account Creation", amount: 100, balance: ctx.users[ctx.users.length -1].balance, eventDate}]});
       setStatus("")
       setShow(false);
     }    

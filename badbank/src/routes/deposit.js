@@ -40,7 +40,7 @@ function Deposit(){
             console.log("successful deposit");
             setStatus("You have successfully made a deposit of $" + deposit);
             ctx.users[ctx.currentUserIndex].balance = ctx.users[ctx.currentUserIndex].balance + Number(deposit);
-            ctx.users[ctx.currentUserIndex].history.push({action:"Deposit", amount: deposit, eventDate})
+            ctx.users[ctx.currentUserIndex].history.push({action:"Deposit", amount: deposit, balance: ctx.users[ctx.currentUserIndex].balance, eventDate})
             setEnable(false);
             setDeposit(0);
         } else {
