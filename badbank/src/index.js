@@ -27,6 +27,7 @@ function Spa() {
     ":"+date.getMinutes()+
     ":"+date.getSeconds();
   console.log(eventDate);
+  console.log("you're already inspecting my ~element~!? Buy me dinner first!")
 
   return(
     <HashRouter>

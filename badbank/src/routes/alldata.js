@@ -1,15 +1,16 @@
 import React from 'react';
 import { UserContext } from "../components/context";
 import Card from "../components/context"
-import App from '../App';
 import '../App.css'
 
 function AllData(){
     const ctx = React.useContext(UserContext);
     console.log(ctx);
     return (
+        <div className="alldataMYGEE">
         <Card
-          txtcolor="black"
+          bgcolor="secondary"
+          cardstyle="big"
           header="All Data"
           width="50rem"
           body={
@@ -31,14 +32,14 @@ function AllData(){
                                     <div className="thick">Balance</div>
                                     <div className="thick">Action</div>
                                     <div className="thick">Amount</div>
-                                    <div className="thick">Event Date</div>
+                                    <div className="thick">Timestamp</div>
                                     </div>
                         {user.history.map((iter, index) => {
                             return(
                             <div className="alldata data-item" key={index}>
-                                <div className="padded">{iter.balance}</div>
+                                <div className="padded">${iter.balance}</div>
                                 <div className="padded">{iter.action}</div>
-                                <div className="padded">{iter.amount}</div>
+                                <div className="padded">${iter.amount}</div>
                                 <div className="padded">{iter.eventDate}</div>
                             </div>
                             )
@@ -53,7 +54,8 @@ function AllData(){
 
                     )}
           </>}
-        />    
+        />  
+        </div>  
       );  
   }
 

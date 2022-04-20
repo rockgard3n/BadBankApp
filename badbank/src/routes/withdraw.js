@@ -1,6 +1,7 @@
 import React from 'react';
 import { UserContext } from "../components/context";
 import Card from "../components/context"
+import '../App.css'
 
 function Withdraw(){
     const ctx = React.useContext(UserContext);
@@ -38,12 +39,15 @@ function Withdraw(){
         }
         else if (withdrawal.match(numbers) || withdrawal > 0){
             if (withdrawal > ctx.users[ctx.currentUserIndex].balance) {
-                alert("You have just made an overdraft");
+                alert("You are attempting to make an overdraft");
+                setStatus("Your withdrawal cannot exceed your balance")
+                setEnable(false);
+                return;
             }
             console.log("successful withdrawal");
             setStatus("You have successfully made a withdrawal of $" + withdrawal);
             ctx.users[ctx.currentUserIndex].balance = ctx.users[ctx.currentUserIndex].balance - Number(withdrawal);
-            ctx.users[ctx.currentUserIndex].history.push({action:"Withdrawal", amount: withdrawal, balance: ctx.users[ctx.currentUserIndex].balance, eventDate})
+            ctx.users[ctx.currentUserIndex].history.unshift({action:"Withdrawal", amount: withdrawal, balance: ctx.users[ctx.currentUserIndex].balance, eventDate})
             setEnable(false);
             setWithdrawal(0);
         } else {
@@ -58,8 +62,11 @@ function Withdraw(){
     }
 
     return (
+        <div className="centeredGrid">
+        <div></div>
        <Card
-          bgcolor="primary"
+          bgcolor="secondary"
+          cardstyle="small"
           header="Withdraw"
           status={status}
           body={show ? (  
@@ -68,7 +75,7 @@ function Withdraw(){
                   <h6>Your current balance is: ${ctx.users[ctx.currentUserIndex].balance}</h6>
                   Withdrawal<br/>
                   <input type="number" className="form-control" id="withdrawal" placeholder="Enter withdrawal amount" value={withdrawal} onChange={e => makeChange(e)}/><br/>
-                  <button type="submit" disabled={!enable} className="btn btn-light" onClick={handleSubmit}>Withdrawal</button>
+                  <button type="submit" disabled={!enable} className="btn btn-light" onClick={handleSubmit}>Withdraw</button>
                   </>
                 ):(
                   <>
@@ -76,6 +83,8 @@ function Withdraw(){
                   </>
                 )}
         />
+        <div></div>
+        </div>
       )
   }
 

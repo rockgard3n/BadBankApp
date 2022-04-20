@@ -37,6 +37,7 @@
   }
 }
 
+
 .alldata {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 2fr;
@@ -52,4 +53,23 @@
 
 .thick {
   font-weight: bold;
+}
+
+.color-nav {
+  background-color: #838383;
+}
+
+.nav-link:hover {
+  color: rgb(209, 207, 207) !important;
+  font-weight: bolder;
+}
+
+.centeredGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.alldataMYGEE {
+  display: flex;
+  justify-content: center;
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { UserContext } from '../components/context'
 import Card from '../components/context'
-
+import '../App.css'
 
 function Login(){
     const ctx = React.useContext(UserContext);
@@ -63,8 +63,11 @@ function Login(){
     }
     
     return (
+        <div className="centeredGrid">
+        <div></div>
         <Card
-          bgcolor="primary"
+          bgcolor="secondary"
+          cardstyle="small"
           header="Login"
           status={status}
           body={show ? (  
@@ -82,6 +85,8 @@ function Login(){
                   </>
                 )}
         />
+        <div></div>
+        </div>
       )
   }
 

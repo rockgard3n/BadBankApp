@@ -1,6 +1,7 @@
 import React from 'react';
 import { UserContext } from "../components/context";
 import Card from "../components/context"
+import '../App.css'
 
 function Deposit(){
     const ctx = React.useContext(UserContext);
@@ -40,7 +41,7 @@ function Deposit(){
             console.log("successful deposit");
             setStatus("You have successfully made a deposit of $" + deposit);
             ctx.users[ctx.currentUserIndex].balance = ctx.users[ctx.currentUserIndex].balance + Number(deposit);
-            ctx.users[ctx.currentUserIndex].history.push({action:"Deposit", amount: deposit, balance: ctx.users[ctx.currentUserIndex].balance, eventDate})
+            ctx.users[ctx.currentUserIndex].history.unshift({action:"Deposit", amount: deposit, balance: ctx.users[ctx.currentUserIndex].balance, eventDate})
             setEnable(false);
             setDeposit(0);
         } else {
@@ -55,8 +56,11 @@ function Deposit(){
     }
 
     return (
+        <div className="centeredGrid">
+        <div></div>
        <Card
-          bgcolor="primary"
+          bgcolor="secondary"
+          cardstyle="small"
           header="Deposit"
           status={status}
           body={show ? (  
@@ -73,6 +77,8 @@ function Deposit(){
                   </>
                 )}
         />
+        <div></div>
+        </div>
       )
   }
 

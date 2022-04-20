@@ -1,7 +1,7 @@
 import React from 'react';
 import { UserContext } from '../components/context'
 import Card from '../components/context'
-
+import '../App.css'
 
 function CreateAccount(){
     const [show, setShow]         = React.useState(true);
@@ -58,6 +58,7 @@ function CreateAccount(){
       setEmail('');
       setPassword('');
       setShow(true);
+      setEnable(false);
     }
 
     function makeChange(e, field){
@@ -76,8 +77,11 @@ function CreateAccount(){
     }
   
     return (
+        <div className="centeredGrid">
+        <div></div>
       <Card
-        bgcolor="primary"
+        bgcolor="secondary"
+        cardstyle="small"
         header="Create Account"
         status={status}
         body={show ? (  
@@ -97,6 +101,8 @@ function CreateAccount(){
                 </>
               )}
       />
+      <div></div>
+      </div>
     )
   }
 
