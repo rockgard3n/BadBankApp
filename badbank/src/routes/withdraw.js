@@ -5,6 +5,7 @@ import '../App.css'
 
 function Withdraw(){
     const ctx = React.useContext(UserContext);
+    console.log(isNaN(ctx.currentUserIndex))
     
     const [status, setStatus]     = React.useState('');
     const [withdrawal, setWithdrawal]   = React.useState(0);
@@ -12,10 +13,10 @@ function Withdraw(){
 
     //checks if a user is logged in currently, this impacts whether users can see the login card or not
     const [show, setShow]         = React.useState(() => {
-        if (ctx.currentUserIndex) {
-            return true;
-        } else {
+        if (ctx.currentUserIndex === null) {
             return false;
+        } else {
+            return true;
         }
     });
 

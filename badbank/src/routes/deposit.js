@@ -12,10 +12,10 @@ function Deposit(){
 
     //checks if a user is logged in currently, this impacts whether users can see the login card or not
     const [show, setShow]         = React.useState(() => {
-        if (ctx.currentUserIndex) {
-            return true;
-        } else {
+        if (ctx.currentUserIndex === null) {
             return false;
+        } else {
+            return true;
         }
     });
 

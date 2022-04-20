@@ -5,6 +5,7 @@ import '../App.css'
 
 function Login(){
     const ctx = React.useContext(UserContext);
+    console.log("Current User " + ctx.currentUserIndex)
     
     const [status, setStatus]     = React.useState('');
     const [email, setEmail]       = React.useState('');
@@ -12,10 +13,10 @@ function Login(){
     const [enable, setEnable]     = React.useState(false);
     //checks if a user is logged in currently, this impacts whether users can see the login card or not
     const [show, setShow]         = React.useState(() => {
-        if (ctx.currentUserIndex) {
-            return false;
-        } else {
+        if (ctx.currentUserIndex === null) {
             return true;
+        } else {
+            return false;
         }
     });
 
@@ -26,6 +27,7 @@ function Login(){
                 if (ctx.users[i].password === password) {
                     search = ctx.users[i]
                     ctx.currentUserIndex = i;
+                    console.log("Current User " + ctx.currentUserIndex)
                     console.log(ctx.users[ctx.currentUserIndex])
                     setStatus("");
                     setShow(false);
