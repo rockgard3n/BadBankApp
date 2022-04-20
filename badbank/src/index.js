@@ -17,9 +17,20 @@ import AllData from './routes/alldata';
 
 
 function Spa() {
+  var timestamp = Date.now()
+  var date = new Date(timestamp);
+
+  var eventDate = date.getDate()+
+    "/"+(date.getMonth()+1)+
+    "/"+date.getFullYear()+
+    " "+date.getHours()+
+    ":"+date.getMinutes()+
+    ":"+date.getSeconds();
+  console.log(eventDate);
+
   return(
     <HashRouter>
-      <UserContext.Provider value={{users:[{name:'abel',email:'abel@mit.edu',password:'secret',balance:100, history: [{action:"Account Creation", amount:100, balance: 100, eventDate:""}]}], currentUserIndex: null}}>
+      <UserContext.Provider value={{users:[{name:'abel',email:'abel@mit.edu',password:'secret',balance:100, history: [{action:"Initial", amount:100, balance: 100, eventDate}]}], currentUserIndex: null}}>
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<Home />}/>

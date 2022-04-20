@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+
+.alldata {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 2fr;
+}
+
+.offset {
+  margin-left: 5px;
+}
+
+.padded {
+  padding: 2px;
+}
+
+.thick {
+  font-weight: bold;
+}
