@@ -1,4 +1,24 @@
-# Getting Started with Create React App
+# Liam's Bad Bank
+## Description 
+This application is called the Bad Bank because it has no security (it also has no backend). I developed it for submission for my Portfolio Project for Part 2 of MIT XPro's Fullstack development bootcamp. 
+
+In this application you can create an account. And once created log in to the accounts to enter in deposits and withdrawals from your account. You can also see a history of your transactions as well as the details of all the other accounts using the Bad Bank. 
+
+## Skills highlighted 
+Building this app was a good excercise in: 
+* Single Page Applications and routing 
+* Utilizing the Create React App
+* Basic architecture and making decisions on how to seperate components 
+* Utilizing context 
+* Deploying a static Single Page Application via AWS
+
+## Potential Future Improvements
+Some improvements I would like to make in the future are: 
+* Adding a backend 
+* Allowing for more complex banking transactions (i.e. transfers between users)
+* Improving the UI
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
