@@ -9,6 +9,7 @@ function Login(){
     const [status, setStatus]     = React.useState('');
     const [email, setEmail]       = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [enable, setEnable]     = React.useState(false);
     //checks if a user is logged in currently, this impacts whether users can see the login card or not
     const [show, setShow]         = React.useState(() => {
         if (ctx.currentUserIndex) {
@@ -30,12 +31,14 @@ function Login(){
                     setShow(false);
                 } else {
                     setStatus("Incorrect Password");
+                    setEnable(false);
                     return;
                 }
             }
         }
         if (search === "") {
             setStatus("No such username found")
+            setEnable(false);
             return;
         }
     }
@@ -45,9 +48,19 @@ function Login(){
         setEmail('');
         setPassword('');
         setShow(true);
+        setEnable(false);
     }
 
-
+    function makeChange(e, field){
+        if (field === "email"){
+            setEmail(e.currentTarget.value)
+            setEnable(true);
+        }
+        if (field === "password"){
+            setPassword(e.currentTarget.value)
+            setEnable(true);
+        }
+    }
     
     return (
         <Card
@@ -57,10 +70,10 @@ function Login(){
           body={show ? (  
                   <>
                   Email address<br/>
-                  <input type="input" className="form-control" id="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.currentTarget.value)}/><br/>
+                  <input type="input" className="form-control" id="email" placeholder="Enter email" value={email} onChange={e => makeChange(e, "email")}/><br/>
                   Password<br/>
-                  <input type="password" className="form-control" id="password" placeholder="Enter password" value={password} onChange={e => setPassword(e.currentTarget.value)}/><br/>
-                  <button type="submit" className="btn btn-light" onClick={handleSubmit}>Login</button>
+                  <input type="password" className="form-control" id="password" placeholder="Enter password" value={password} onChange={e => makeChange(e, "password")}/><br/>
+                  <button type="submit" disabled={!enable} className="btn btn-light" onClick={handleSubmit}>Login</button>
                   </>
                 ):(
                   <>
