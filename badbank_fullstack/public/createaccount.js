@@ -29,9 +29,15 @@ function CreateForm(props){
   const [password, setPassword] = React.useState('');
   const ctx = React.useContext(UserContext);  
 
+  //we update the handle function to let it talk to server instead of relying on context
   function handle(){
     console.log(name,email,password);
-    ctx.users.push({name,email,password});
+    const url = `/account/create/${name}/${email}/${password}`;
+    (async () => {
+      var res = await fetch(url);
+      var data = await res.json();
+      console.log(data);
+    })();
     props.setShow(false);
   }    
 
