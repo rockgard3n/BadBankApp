@@ -25,14 +25,33 @@ app.get('/account/all', function (req, res) {
         });
 });
 
-/* havent turned these into DAL routes yet
+
 //login user route
 app.get('/account/login/:email/:password', function (req, res) {
-    res.send({
-        email:      req.params.email,
-        password:   req.params.password
-    });
+    dal.login(req.params.email, req.params.password).
+        then((bool) => {
+            console.log(bool);
+            res.send(bool);
+        });
+
 });
+
+
+
+app.get('/account/update/:email/:password/:amount', (req, res) => {
+    dal.updateBal(req.params.email,req.params.password, parseInt(req.params.amount))
+    res.send("Post request Called");
+  })
+/* havent turned these into DAL routes yet
+
+app.get('account/updateBal/:email/:password', function (req, res) {
+    dal.updateBal(req.params.email, req.params.password, 1000)
+    res.send("Update balance request Called");
+
+})
+
+    dal.updateBal(req.params.email, req.params.password, req.params.amount)
+    .send("Post request Called");
 
 //all acounts route
 app.get('/account/all', function (req, res) {

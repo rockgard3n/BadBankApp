@@ -13,20 +13,29 @@ MongoClient.connect(url, {useUnifiedTopology: true}, function(err, client) {
     var email = name + '@mit.edu';
 
     //insert into customer table 
+    /*
     var collection = db.collection('customers');
     var doc = {name, email};
     collection.insertOne(doc, {w:1}, function(err,result) {
         console.log('Document insert');
     });
 
-    var customers = db
-        .collection('customers')
-        .find()
-        .toArray(function(err, docs){
-            console.log('Collections: ', docs);
+    const customers = db
+    .collection('users')
+    .findOne({email: "bruce@mit.edu", password: "secret"}, function (err, doc){
+        console.log("typing rapidly, a bead of sweat drips down his face");
 
-            //cleanup
-            client.close();
-        });
+    });
 
+    const secondtest = db
+    .collection('users')
+    .updateOne(
+        {email: "bruce@mit.edu", password: "secret"},
+        { $inc: {balance: 150}},
+        function (err, doc){
+            console.log("like a fever dream we begin to enter a montage");
+        }
+
+    );
 });
+*/

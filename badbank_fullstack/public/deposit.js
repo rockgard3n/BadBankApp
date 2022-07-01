@@ -1,13 +1,26 @@
 function Deposit(){
+  const ctx = React.useContext(UserContext);
+  
   const [show, setShow]     = React.useState(true);
   const [status, setStatus] = React.useState('');  
+
+  
+  const [logshow, setLogshow]         = React.useState(() => {
+    if (ctx.logger === true) {
+        return false;
+    } else {
+        return true;
+    }
+    });
+  
+  console.log(ctx);
 
   return (
     <Card
       bgcolor="warning"
       header="Deposit"
       status={status}
-      body={show ? 
+      body={logshow ? <NotLoggedIn/> : show ? 
         <DepositForm setShow={setShow} setStatus={setStatus}/> :
         <DepositMsg setShow={setShow}/>}
     />
@@ -25,32 +38,20 @@ function DepositMsg(props){
   </>);
 } 
 
+function NotLoggedIn(){
+  return (<>
+    <h5>Please log in to access this feature</h5>
+  </>);
+}
+
 function DepositForm(props){
-  const [email, setEmail]   = React.useState('');
+  //const [email, setEmail]   = React.useState('');
   const [amount, setAmount] = React.useState('');
   const ctx = React.useContext(UserContext);  
 
-  function handle(){
-    console.log(email,amount);
-    const user = ctx.users.find((user) => user.email == email);
-    if (!user) {
-      props.setStatus('fail!');
-      return;      
-    }
-
-    user.balance = user.balance + Number(amount);
-    console.log(user);
-    props.setStatus('');      
-    props.setShow(false);
-  }
-
   return(<>
 
-    Email<br/>
-    <input type="input" 
-      className="form-control" 
-      placeholder="Enter email" 
-      value={email} onChange={e => setEmail(e.currentTarget.value)}/><br/>
+    <h3>Welcome {ctx.name}</h3><br/>
       
     Amount<br/>
     <input type="number" 
@@ -60,7 +61,14 @@ function DepositForm(props){
 
     <button type="submit" 
       className="btn btn-light" 
-      onClick={handle}>Deposit</button>
+      onClick={() => {
+        fetch(`/account/update/${ctx.email}/${ctx.password}/${amount}`)
+          .then(()=>{
+            props.setStatus('');
+            props.setShow(false);
+            console.log("holy shit this actually worked?");
+          })
+      }}>Deposit</button>
 
   </>);
 }

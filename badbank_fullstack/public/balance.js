@@ -1,18 +1,35 @@
 function Balance(){
+  const ctx = React.useContext(UserContext);
   const [show, setShow]     = React.useState(true);
   const [status, setStatus] = React.useState('');  
+
+
+  const [logshow, setLogshow]         = React.useState(() => {
+    if (ctx.logger === true) {
+        return false;
+    } else {
+        return true;
+    }
+    });
+
 
   return (
     <Card
       bgcolor="info"
       header="Balance"
       status={status}
-      body={show ?
+      body={logshow ? <NotLoggedIn/> : show ?
         <BalanceForm setShow={setShow} setStatus={setStatus}/> :
         <BalanceMsg setShow={setShow}/>}
     />
   )
 
+}
+
+function NotLoggedIn(){
+  return (<>
+    <h5>Please log in to access this feature</h5>
+  </>);
 }
 
 function BalanceMsg(props){
@@ -27,31 +44,22 @@ function BalanceMsg(props){
 }
 
 function BalanceForm(props){
-  const [email, setEmail]   = React.useState('');
-  const [balance, setBalance] = React.useState('');  
   const ctx = React.useContext(UserContext);  
 
   function handle(){
-    const user = ctx.users.find((user) => user.email == email);
-    if (!user) {
-      props.setStatus('fail!')      
-      return;      
-    }
+    const url = `/account/login/${ctx.email}/${ctx.password}`;
+    (async () => {
+      var res = await fetch(url)
+      var data = await res.json();
+      console.log(data.balance);
+      props.setStatus(`You have a balance of ${data.balance} dollars`)
 
-    setBalance(user.balance);
-    console.log(user);
-    props.setStatus('Your balance is: ' + user.balance);      
-    props.setShow(false);
+    })();
   }
 
   return (<>
 
-    Email<br/>
-    <input type="input" 
-      className="form-control" 
-      placeholder="Enter email" 
-      value={email} 
-      onChange={e => setEmail(e.currentTarget.value)}/><br/>
+<h3>Welcome {ctx.name}</h3><br/>
 
     <button type="submit" 
       className="btn btn-light" 

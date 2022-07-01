@@ -1,6 +1,14 @@
 function Login(){
-  const [show, setShow]     = React.useState(true);
+  const ctx = React.useContext(UserContext);
   const [status, setStatus] = React.useState('');    
+
+  const [show, setShow]         = React.useState(() => {
+    if (ctx.logger === true) {
+        return false;
+    } else {
+        return true;
+    }
+});
 
   return (
     <Card
@@ -14,13 +22,30 @@ function Login(){
   ) 
 }
 
+
+
+
 function LoginMsg(props){
+  const ctx = React.useContext(UserContext);
+
+  function logout(){
+    //const ctx = React.useContext(UserContext); 
+    ctx.name = null;
+    ctx.email = null;
+    ctx.password = null;
+    ctx.balance = null;
+    ctx.logger = false;
+    console.log(ctx);  
+    props.setStatus('');
+    props.setShow(true)
+    console.log('We are out') 
+  }
   return(<>
     <h5>Success</h5>
     <button type="submit" 
       className="btn btn-light" 
-      onClick={() => props.setShow(true)}>
-        Authenticate again
+      onClick={logout}>
+        LogOut
     </button>
   </>);
 }
@@ -32,22 +57,35 @@ function LoginForm(props){
   const ctx = React.useContext(UserContext);  
 
   function handle(){
-    const user = ctx.users.find((user) => user.email == email);
-    console.log(user);
-    console.log(email, password);
-    if (!user) {
-      console.log('one')      
-      props.setStatus('fail!')      
-      return;      
-    }
-    if (user.password == password) {
-      console.log('two')            
-      props.setStatus('');
-      props.setShow(false);
-      return;      
-    }
-    console.log('three')          
-    props.setStatus('fail!');        
+    const url = `/account/login/${email}/${password}`;
+    (async () => {
+      var res = await fetch(url)
+      var data = await res.json();
+      console.log(data);
+
+      console.log(email, password);
+      //console.log("API response password" + data.password);
+      if (data === null) {
+        console.log('API returned Null')      
+        props.setStatus('fail!')      
+        return;      
+      }
+      if (data.password == password) {
+        console.log('We are in')  
+        ctx.name = data.name;
+        ctx.email = data.email;
+        ctx.password = data.password;
+        ctx.balance = data.balance;
+        ctx.logger = true;
+        console.log(ctx);  
+        props.setStatus('');
+        props.setShow(false);
+        return;      
+      }
+      console.log('three')          
+      props.setStatus('fail!');    
+    })();
+    
   }
 
 

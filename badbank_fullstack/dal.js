@@ -35,7 +35,41 @@ function all(){
             });
     })
 }
+
+//lets login beast 
+function login(email, password){
+    console.log("its 1991. A man in a beanie sits in front of his computer and cracks his knuckles. 0s and 1s float down his screen.");
+    return new Promise((resolve, reject) => {
+        const customers = db
+            .collection('users')
+            .findOne({email: email, password: password}, function (err, doc){
+                console.log("typing rapidly, a bead of sweat drips down his face");
+                console.log(JSON.stringify(doc));
+                err ? reject(err) : resolve(doc);
+            });
+
+    })
+}
+
+//update some balances get that $$$
+function updateBal(email, password, amount){
+    console.log("if only money was this fungible");
+    return new Promise((resolve, reject) => {
+        const customers = db
+        .collection('users')
+        .updateOne(
+            {email: email, password: password},
+            { $inc: {balance: amount}},
+            function (err, doc){
+                console.log("like a fever dream we begin to enter a montage");
+                console.log(JSON.stringify(doc));
+                err ? reject(err) : resolve(doc);
+            }
+    
+        );
+    })
+}
 //this shit below is MAD VITAL BRO if you dont put this in it doesnt let index.js bool with our functions bruh
-module.exports = {create, all};
+module.exports = {create, all, login, updateBal};
 
 //setTimeout(() => {create("liam","test@mit.edu","secret")}, 1000);
