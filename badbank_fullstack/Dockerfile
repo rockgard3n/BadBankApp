@@ -1,15 +1,17 @@
-FROM node:12
-ENV PORT 3000
+# get the base node image
+FROM node:14 as builder
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+# set the working dir for container
+WORKDIR /frontend
 
-COPY package*.json /usr/src/app/
+# copy the json file first
+COPY ./package.json /frontend
+
+# install npm dependencies
 RUN npm install
 
-COPY . /usr/src/app/
+# copy other project files
+COPY . .
 
-RUN npm run build
-EXPOSE 3000
-
-CMD "npm" "run" "dev"
+# build the folder
+CMD [ "npm", "run", "start" ]

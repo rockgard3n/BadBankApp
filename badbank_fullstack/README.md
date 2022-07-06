@@ -5,6 +5,7 @@
 npm init -y
 npm install express
 npm install cors
+node index.js
 ### docker image for mongodb 
 docker run -p 27017:27017 --name badbank -d mongo
 
